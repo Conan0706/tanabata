@@ -1,0 +1,115 @@
+<!-- result.erb -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <link rel="stylesheet" href="/css/result.css">
+</head>
+<body>
+    <h1>Result</h1>
+    <h2 id="postCount"><%= @postsCount.to_s %></h2>
+    <div class="container">
+        <div class="box" id="box1">
+            <img src="/img/orihime.png" width="150px" height="200px">
+        </div>
+        <div class="box" id="box2">
+            <img src="/img/hikobosi.png" width="150px" height="200px">
+        </div>
+    </div>
+
+<script>
+    // WebSocket作成のためのURLを取得
+    var wsProtocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
+    var wsHost = location.host;
+    var wsPath = '/websocket';
+    var wsURL = wsProtocol + wsHost + wsPath;
+    
+    var count = document.getElementById('postCount').innerHTML;
+    
+    var container = document.querySelector('.container');
+    var box1 = document.getElementById('box1');
+    var box2 = document.getElementById('box2');
+    
+    // 初期設定
+    var initialDistance = 500; // 初期のボックス間距離
+    
+    // 初期位置の設定
+    updateBoxPositions()
+    
+    // WebSocketの接続
+    var ws = new WebSocket(wsURL);
+    
+    ws.onopen = function() {
+        console.log('WebSocket connected');
+    };
+    
+    ws.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+
+      // レコード数を更新
+        document.querySelector('#postCount').innerHTML = data.postCount;
+        count = data.postCount;
+        
+        // 画像処理の判定
+        if(count <= 19)
+        {
+            updateBoxPositions()
+        }
+        else
+        {
+            // 織姫彦星の単体画像を非表示に
+            box1.classList.add('hide-image');
+            box2.classList.add('hide-image');
+            
+            const container = document.querySelector('.container');
+
+            let box3 = document.getElementById('box3');
+            if(!box3)
+            {
+                // boxを追加
+                const divElement = document.createElement('div');
+                divElement.classList.add('box');
+                divElement.id = 'box3';
+                
+                // imgタグを追加
+                const imgElement = document.createElement('img');
+                imgElement.src = '/img/tanabata.png';
+                imgElement.style.width = '500px';
+                imgElement.style.height = '500px';
+                
+                divElement.appendChild(imgElement);
+                container.appendChild(divElement);
+            }
+            
+            let video = document.querySelector('.background-video');
+            if(!video)
+            {
+                const divElement = document.createElement('div');
+                divElement.id = 'video-container';
+                const videoElement = document.createElement('video');
+                videoElement.src = '../img/background.mp4';
+                videoElement.autoplay = true;
+                videoElement.loop = true;
+                videoElement.muted = true;
+        
+                divElement.appendChild(videoElement);
+                container.appendChild(divElement);
+            }
+        }
+    };
+    
+    ws.onclose = function() {
+        console.log('WebSocket disconnected');
+    };
+    
+    // 近づく距離を計算する関数
+    function updateBoxPositions() {
+        var distance = initialDistance - (count * 25);
+        
+        box1.style.marginRight = distance.toString() + 'px';
+        box2.style.marginLeft = distance.toString() + 'px';
+    }
+
+</script>
+</body>
+</html>

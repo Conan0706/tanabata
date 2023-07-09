@@ -1,0 +1,10 @@
+default_env: &default
+  adapter: postgresql
+  encoding: unicode
+  database: tanabata
+
+development:
+  <<: *default
+
+production:
+  <<: *default
