@@ -1,0 +1,51 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  position: relative;
+  width: 400px;
+  height: 650px;
+  background-color: #fce9e9;
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  text-align: center;
+}
+
+#message {
+  width: 300px;
+  height: 30px;
+}
+
+#username, button {
+  width: 100px;
+  height: 30px;
+}
+
+.vertical-text {
+  font-size: 30px;
+  padding:20px 0px;
+  writing-mode: vertical-rl;
+  position: absolute;
+}
+
+#p-message {
+  top: 0;
+}
+
+#p-name {
+  bottom: 0;
+  left: 0;
+}

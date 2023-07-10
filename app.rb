@@ -11,6 +11,16 @@ set :sockets, []
 connections = []
 
 get '/' do
+  @posts = Post.all
+  erb :home
+end
+
+get "/result" do
+  @postsCount = Post.count
+  erb :result 
+end
+
+get "/index" do
   erb :index
 end
 

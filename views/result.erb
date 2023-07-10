@@ -55,6 +55,21 @@
         {
             updateBoxPositions()
         }
+    };
+    
+    ws.onclose = function() {
+        console.log('WebSocket disconnected');
+    };
+    
+    // 近づく距離を計算する関数
+    function updateBoxPositions() {
+        console.log(count);
+        if(count <= 19){
+            var distance = initialDistance - (count * 25);
+        
+            box1.style.marginRight = distance.toString() + 'px';
+            box2.style.marginLeft = distance.toString() + 'px';
+        }
         else
         {
             // 織姫彦星の単体画像を非表示に
@@ -74,7 +89,7 @@
                 // imgタグを追加
                 const imgElement = document.createElement('img');
                 imgElement.src = '/img/tanabata.png';
-                imgElement.style.width = '500px';
+                imgElement.style.width = '600px';
                 imgElement.style.height = '500px';
                 
                 divElement.appendChild(imgElement);
@@ -96,18 +111,8 @@
                 container.appendChild(divElement);
             }
         }
-    };
-    
-    ws.onclose = function() {
-        console.log('WebSocket disconnected');
-    };
-    
-    // 近づく距離を計算する関数
-    function updateBoxPositions() {
-        var distance = initialDistance - (count * 25);
         
-        box1.style.marginRight = distance.toString() + 'px';
-        box2.style.marginLeft = distance.toString() + 'px';
+        
     }
 
 </script>

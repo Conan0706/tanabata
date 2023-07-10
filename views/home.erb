@@ -1,0 +1,27 @@
+<!-- index.erb -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ホーム</title>
+  <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+  <div class="link">
+    <a href="/result" class="btn btn--gray">結果画面</a>
+  <a href="/index" class="btn btn--green">短冊画面</a>
+  </div>
+  
+  <div class="card-group">
+  <% if !@posts.nil? %>
+    <% @posts.each do |post| %>
+      <div class="card">
+        <div class="content">
+          <p id="p-message"><%= post.content %></p>
+          <p id = "p-name"><%= post.name %></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</body>
+
+</html>
